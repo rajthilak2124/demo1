@@ -3,7 +3,7 @@ name: Continuous Deployment
 on:
   push:
     branches: [main]
-  workflow_dispatch:  # Allows manual trigger
+  workflow_dispatch:
 
 jobs:
   deploy-staging:
@@ -19,13 +19,21 @@ jobs:
       with:
         python-version: "3.10"
 
-    - name: Install dependencies
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
     - name: Run tests
       run: pytest
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'  # or your preferred version
+
+    - name: Install Netlify CLI
+      run: npm install -g netlify-cli
 
     - name: Deploy to Netlify (Staging)
       run: netlify deploy --dir=public --site ${{ secrets.STAGING_SITE_ID }}
@@ -40,6 +48,14 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install Netlify CLI
+      run: npm install -g netlify-cli
 
     - name: Deploy to Netlify (Production)
       run: netlify deploy --dir=public --prod --site ${{ secrets.PRODUCTION_SITE_ID }}
