@@ -1,9 +1,8 @@
-from flask import Flask, send_from_directory
-app = Flask(__name__)
+def add(a, b):
+    return a + b
 
-@app.route('/')
-def home():
-    return send_from_directory('public', 'index.html')
+def subtract(a, b):
+    return a - b
 
 if __name__ == "__main__":
-    app.run()
+    print("Welcome! Use this as a module or run tests.")
