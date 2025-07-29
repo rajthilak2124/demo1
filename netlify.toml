@@ -1,3 +1,9 @@
 [build]
-  command = "echo 'No build needed for Python'"
-  publish = "public/"
+  command = "bash build.sh"
+  publish = "public/"  # For Flask: "app/static" etc.
+  functions = "functions/"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

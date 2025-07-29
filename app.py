@@ -1,8 +1,9 @@
-def add(a, b):
-    return a + b
+from flask import Flask, send_from_directory
+app = Flask(__name__)
 
-def subtract(a, b):
-    return a - b
+@app.route('/')
+def home():
+    return send_from_directory('public', 'index.html')
 
 if __name__ == "__main__":
-    print("Welcome!")
+    app.run()
